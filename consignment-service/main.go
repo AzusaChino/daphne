@@ -36,6 +36,7 @@ func main() {
 	repository := &MongoRepository{consignmentCollection}
 	vesselClient := vesselPb.NewVesselService(serviceVessel, srv.Client())
 	h := &handler{repository: repository, vesselClient: vesselClient}
+
 	if err = pb.RegisterShippingServiceHandler(srv.Server(), h); err != nil {
 		log.Panic(err)
 	}
