@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/AzusaChino/daphne/common"
+	"github.com/AzusaChino/daphne/common/db"
 	pb "github.com/AzusaChino/daphne/consignment-service/proto/consignment"
 	"github.com/micro/micro/v3/service"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -18,7 +18,7 @@ func main() {
 	srv.Init()
 
 	uri := os.Getenv("DB_HOST")
-	client, err := common.CreateMongoClient(context.Background(), uri, true)
+	client, err := db.CreateMongoClient(context.Background(), uri, true)
 
 	if err != nil {
 		log.Panic(err)
@@ -33,7 +33,8 @@ func main() {
 	consignmentCollection := client.Database("daphne").Collection("consignments")
 	repository := &MongoRepository{consignmentCollection}
 
-	if err = pb.RegisterShippingServiceHandler(srv.Server(), func() {}); err != nil {
+	h := &handler{repository}
+	if err = pb.RegisterShippingServiceHandler(srv.Server(), h); err != nil {
 		log.Panic(err)
 	}
 
