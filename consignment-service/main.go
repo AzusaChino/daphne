@@ -2,19 +2,21 @@ package main
 
 import (
 	"context"
-	"github.com/AzusaChino/daphne/common/db"
 	pb "github.com/AzusaChino/daphne/consignment-service/proto/consignment"
+	vesselPb "github.com/AzusaChino/daphne/vessel-service/proto/vessel"
+	"github.com/AzusaChino/ribes/db"
 	"github.com/micro/micro/v3/service"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"os"
 )
 
-const serviceName = "daphne.service.vessel"
+const serviceConsignment = "daphne.service.user"
+const serviceVessel = "daphne.service.client"
 
 func main() {
 	srv := service.New(
-		service.Name(serviceName))
+		service.Name(serviceConsignment))
 	srv.Init()
 
 	uri := os.Getenv("DB_HOST")
@@ -32,8 +34,8 @@ func main() {
 
 	consignmentCollection := client.Database("daphne").Collection("consignments")
 	repository := &MongoRepository{consignmentCollection}
-
-	h := &handler{repository}
+	vesselClient := vesselPb.NewVesselService(serviceVessel, srv.Client())
+	h := &handler{repository: repository, vesselClient: vesselClient}
 	if err = pb.RegisterShippingServiceHandler(srv.Server(), h); err != nil {
 		log.Panic(err)
 	}

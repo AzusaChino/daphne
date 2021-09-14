@@ -10,7 +10,7 @@ ENV GOPROXY=https://goproxy.cn,direct
 COPY . .
 RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o vessel-service *.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o user-service *.go
 
 FROM alpine:3.14
 RUN apk --no-cache add ca-certificates
@@ -18,5 +18,5 @@ RUN apk --no-cache add ca-certificates
 RUN mkdir /app
 WORKDIR /app
 
-COPY --from=builder /app/vessel-service .
-CMD ['./vessel-service']
+COPY --from=builder /app/user-service .
+CMD ['./user-service']

@@ -1,4 +1,4 @@
-module github.com/AzusaChino/daphne/vessel-service
+module github.com/AzusaChino/daphne/user-service
 
 go 1.17
 
@@ -26,7 +26,9 @@ require (
 	github.com/hashicorp/go-version v1.2.1 // indirect
 	github.com/hpcloud/tail v1.0.0 // indirect
 	github.com/improbable-eng/grpc-web v0.13.0 // indirect
+	github.com/jmoiron/sqlx v1.2.0 // indirect
 	github.com/klauspost/compress v1.9.5 // indirect
+	github.com/lib/pq v1.3.0 // indirect
 	github.com/miekg/dns v1.1.27 // indirect
 	github.com/nightlyone/lockfile v1.0.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
@@ -55,7 +57,6 @@ require (
 	golang.org/x/sys v0.0.0-20210112080510-489259a85091 // indirect
 	golang.org/x/text v0.3.5 // indirect
 	google.golang.org/genproto v0.0.0-20200806141610-86f49bd18e98 // indirect
-	google.golang.org/grpc/examples v0.0.0-20210913185052-5bfc05fb0cf0 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
