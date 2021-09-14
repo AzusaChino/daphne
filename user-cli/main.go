@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	proto "github.com/AzusaChino/daphne/user-service/proto/user"
+	pb "github.com/AzusaChino/daphne/user-service/proto/user"
 	"github.com/micro/micro/v3/service"
 )
 
-func createUser(ctx context.Context, service *service.Service, user *proto.User) error {
-	client := proto.NewUserService("daphne.service.user", service.Client())
+func createUser(ctx context.Context, service *service.Service, user *pb.User) error {
+	client := pb.NewUserService("daphne.service.user", service.Client())
 	rsp, err := client.Create(ctx, user)
 	if err != nil {
 		return err
@@ -25,7 +25,7 @@ func main() {
 	ctx := context.Background()
 	srv := service.New()
 	srv.Init()
-	u := &proto.User{
+	u := &pb.User{
 		Name:     "",
 		Email:    "",
 		Company:  "",

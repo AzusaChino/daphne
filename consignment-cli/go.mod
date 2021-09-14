@@ -3,7 +3,7 @@ module github.com/AzusaChino/daphne/consignment-cli
 go 1.17
 
 require (
-	github.com/AzusaChino/daphne/consignment-service v0.0.0-20210914035828-8c281b3df37b
+	github.com/AzusaChino/daphne/consignment-service v0.0.0-20210914061716-efa22abd296e
 	github.com/micro/micro/v3 v3.4.0
 )
 
