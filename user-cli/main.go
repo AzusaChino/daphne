@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/asim/go-micro/v3"
 
 	pb "github.com/AzusaChino/daphne/user-service/proto/user"
-	"github.com/micro/micro/v3/service"
 )
 
-func createUser(ctx context.Context, service *service.Service, user *pb.User) error {
+func createUser(ctx context.Context, service micro.Service, user *pb.User) error {
 	client := pb.NewUserService("daphne.service.user", service.Client())
 	rsp, err := client.Create(ctx, user)
 	if err != nil {
@@ -23,7 +23,7 @@ func createUser(ctx context.Context, service *service.Service, user *pb.User) er
 
 func main() {
 	ctx := context.Background()
-	srv := service.New()
+	srv := micro.NewService()
 	srv.Init()
 	u := &pb.User{
 		Name:     "",

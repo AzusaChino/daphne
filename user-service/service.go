@@ -8,7 +8,7 @@ var (
 	// as a salt when hashing our tokens.
 	// Please make your own way more secure than this,
 	// use a randomly generated md5 hash or something.
-	key = []byte("mySuperSecretKey")
+	key = []byte("DoMeAFavor")
 )
 
 // CustomClaims is our custom metadata, which will be hashed
@@ -45,7 +45,7 @@ func (srv *TokenService) Encode(user *pb.User) (string, error) {
 		user,
 		jwt.StandardClaims{
 			ExpiresAt: 15000,
-			Issuer:    "shippy.service.user",
+			Issuer:    "daphne.service.user",
 		},
 	}
 

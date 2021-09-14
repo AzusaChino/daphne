@@ -5,7 +5,7 @@ import (
 	pb "github.com/AzusaChino/daphne/consignment-service/proto/consignment"
 	vesselPb "github.com/AzusaChino/daphne/vessel-service/proto/vessel"
 	"github.com/AzusaChino/ribes/db"
-	"github.com/micro/micro/v3/service"
+	"github.com/asim/go-micro/v3"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"os"
@@ -15,8 +15,8 @@ const serviceConsignment = "daphne.service.user"
 const serviceVessel = "daphne.service.client"
 
 func main() {
-	srv := service.New(
-		service.Name(serviceConsignment))
+	srv := micro.NewService(
+		micro.Name(serviceConsignment))
 	srv.Init()
 
 	uri := os.Getenv("DB_HOST")

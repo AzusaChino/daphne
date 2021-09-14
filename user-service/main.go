@@ -4,8 +4,8 @@ import (
 	"context"
 	pb "github.com/AzusaChino/daphne/user-service/proto/user"
 	"github.com/AzusaChino/ribes/db"
+	"github.com/asim/go-micro/v3"
 	"github.com/jmoiron/sqlx"
-	"github.com/micro/micro/v3/service"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"os"
@@ -58,9 +58,9 @@ func main() {
 	repo := NewPostgresRepository(postgres)
 	tokenService := &TokenService{repo}
 
-	srv := service.New(
-		service.Name(serviceUser),
-		service.Version("latest"))
+	srv := micro.NewService(
+		micro.Name(serviceUser),
+		micro.Version("latest"))
 	srv.Init()
 
 	h := &handler{repository: repo, tokenService: tokenService}

@@ -9,7 +9,7 @@ import (
 	"context"
 
 	pb "github.com/AzusaChino/daphne/consignment-service/proto/consignment"
-	"github.com/micro/micro/v3/service"
+	"github.com/asim/go-micro/v3"
 )
 
 const (
@@ -27,7 +27,7 @@ func parseFile(file string) (*pb.Consignment, error) {
 }
 
 func main() {
-	srv := service.New(service.Name("daphne.cli.consignment"))
+	srv := micro.NewService(micro.Name("daphne.cli.consignment"))
 	srv.Init()
 
 	client := pb.NewShippingService("daphne.service.consignment", srv.Client())
