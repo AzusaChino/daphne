@@ -11,5 +11,5 @@ grpc practice project
 for generating `*_micro.pb.go` files, we need to install `protoc-gen-micro`.(must ensure protoc & protoc-gen-go exists)
 
 ```shell
-go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
+go get github.com/micro/micro/v3/cmd/protoc-gen-micro
 ```
