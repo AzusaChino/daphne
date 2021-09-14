@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	pb "github.com/AzusaChino/daphne/consignment-service/proto/consignment"
-	vesselPb "github.com/AzusaChino/daphne/vessel-service/proto/vessel"
+	vesselProto "github.com/AzusaChino/daphne/vessel-service/proto/vessel"
 	"github.com/AzusaChino/ribes/db"
 	"github.com/asim/go-micro/v3"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -34,7 +34,7 @@ func main() {
 
 	consignmentCollection := client.Database("daphne").Collection("consignments")
 	repository := &MongoRepository{consignmentCollection}
-	vesselClient := vesselPb.NewVesselService(serviceVessel, srv.Client())
+	vesselClient := vesselProto.NewVesselService(serviceVessel, srv.Client())
 	h := &handler{repository: repository, vesselClient: vesselClient}
 
 	if err = pb.RegisterShippingServiceHandler(srv.Server(), h); err != nil {

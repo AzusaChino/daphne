@@ -3,7 +3,7 @@ syntax = "proto3";
 package consignment;
 
 // go_package combined with source_relative path
-option go_package = "github.com/AzusaChino/daphne/vessel-service/proto/vessel";
+option go_package = "github.com/AzusaChino/daphne/consignment-service/proto/consignment";
 
 service ShippingService {
     rpc CreateConsignment(Consignment) returns (Response) {};

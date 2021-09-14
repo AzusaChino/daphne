@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/asim/go-micro/v3"
+	"log"
 
 	pb "github.com/AzusaChino/daphne/user-service/proto/user"
 )
@@ -26,10 +27,12 @@ func main() {
 	srv := micro.NewService()
 	srv.Init()
 	u := &pb.User{
-		Name:     "",
-		Email:    "",
-		Company:  "",
-		Password: "",
+		Name:     "abc",
+		Email:    "abc@protomail.com",
+		Company:  "ABC.INC",
+		Password: "abc1234",
 	}
-	_ = createUser(ctx, srv, u)
+	if err := createUser(ctx, srv, u); err != nil {
+		log.Fatal(err)
+	}
 }
