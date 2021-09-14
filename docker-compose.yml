@@ -1,0 +1,36 @@
+version: '3.6'
+
+services:
+  mongo:
+    image: mongo:5.0.2
+    container_name: mongo
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/data/logs
+    volumes:
+      - mongo-data:/data
+    ports:
+      - "27017:27017"
+    command:
+      - mongo
+      - --logpath=/data/logs
+    networks:
+      - daphne-network
+  postgre:
+    image: postgres:13.4-alpine
+    container_name: postgre
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=admin
+    ports:
+      - "5432:5432"
+    networks:
+      - daphne-network
+
+networks:
+  daphne-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
