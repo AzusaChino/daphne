@@ -1,0 +1,10 @@
+postgres:
+  user: postgres
+  database: postgres
+  port: 5432
+  sslMode: disable
+
+etcd:
+  endpoints:
+    - localhost:2379
+  timeout: 5s
