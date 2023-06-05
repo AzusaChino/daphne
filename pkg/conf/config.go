@@ -17,4 +17,5 @@ type PostgresConfig struct {
 type EtcdConfig struct {
 	Endpoints []string      `yaml:"endpoints"`
 	Timeout   time.Duration `yaml:"timeout"`
+	User      string        `yaml:"user"`
 }

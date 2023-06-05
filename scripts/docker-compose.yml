@@ -1,86 +1,37 @@
-version: '3.6'
+version: "3.6"
 
 services:
-  consignment:
-    restart: always
-    build: ./consignment-service
-    depends_on:
-      - mongo
-      - vessel
-    links:
-      - mongo
+  etcd:
+    image: docker.io/bitnami/etcd:3.5
+    environment:
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_ROOT_PASSWORD=${ETCD_PASS}
     ports:
-      - "50051:50051"
-    environment:
-      - MICRO_SERVER_ADDRESS=:50051
-      - DB_HOST=mongodb://mongo:27017
-    networks:
-      - daphne-network
-  vessel:
-    restart: always
-    build: ./vessel-service
-    depends_on:
-      - mongo
-    links:
-      - mongo
-    ports:
-      - "50052:50051"
-    environment:
-      - MICRO_SERVER_ADDRESS=:50051
-      - DB_HOST=mongodb://mongo:27017
-    networks:
-      - daphne-network
-  user:
-    restart: always
-    build: ./user-service
-    depends_on:
-      - mongo
-    links:
-      - mongo
-    ports:
-      - "50053:50051"
-    environment:
-      - MICRO_SERVER_ADDRESS=:50051
-      - DB_HOST=postgres
-      - DB_USER=admin
-      - DB_PASSWORD=123456
-      - DB_NAME=postgres
-    networks:
-      - daphne-network
-  consignment-cli:
-    build: ./consignment-cli
-  user-cli:
-    build: ./user-cli
-  mongo:
-    image: mongo:5.0.2
-    container_name: mongo
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/data/logs
+      - 2379:2379
+      - 2380:2380
     volumes:
-      - mongo-data:/data
-    ports:
-      - "27017:27017"
-    command:
-      - mongo
-      - --logpath=/data/logs
+      - etcd_data:/bitnami/etcd/data
     networks:
-      - daphne-network
-  postgres:
-    image: postgres:13.4-alpine
-    container_name: postgres
-    environment:
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_USER=admin
-    ports:
-      - "5432:5432"
-    networks:
-      - daphne-network
+      - daphne_network
 
-networks:
-  daphne-network:
-    driver: bridge
+  redis:
+    image: docker.io/bitnami/redis:7.0
+    environment:
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+      - REDIS_PASSWORD=${REDIS_PASS}
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/bitnami/redis/data
+    networks:
+      - daphne_network
 
 volumes:
-  mongo-data:
+  etcd_data:
     driver: local
+  redis_data:
+    driver: local
+
+networks:
+  daphne_network:
+    driver: bridge

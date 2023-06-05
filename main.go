@@ -59,7 +59,7 @@ func main() {
 	// 	}
 	// 	fmt.Println(name, consumeType, target)
 	// }
-	watchCh := global.EtcdClient.Watch(context.Background(), "daphne/DEFAULT")
+	watchCh := global.EtcdClient.Watch(context.Background(), "daphne/DEFAULT", v3.WithPrefix())
 	for watchResp := range watchCh {
 		for _, event := range watchResp.Events {
 			switch event.Type {
@@ -108,10 +108,14 @@ func initDb() {
 
 func initEtcd() {
 	var err error
+	etcdUserPasss := os.Getenv(global.ETCD_PASS)
 	etcdCfg := v3.Config{
 		Endpoints:   global.DaphneConfig.Etcd.Endpoints,
 		DialTimeout: global.DaphneConfig.Etcd.Timeout,
+		Username:    global.DaphneConfig.Etcd.User,
+		Password:    etcdUserPasss,
 	}
+
 	global.EtcdClient, err = v3.New(etcdCfg)
 	if err != nil {
 		panic(err)

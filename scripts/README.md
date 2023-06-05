@@ -1,11 +1,19 @@
-# `/scripts`
+# Scripts
 
-Scripts to perform various build, install, analysis, etc operations.
+## Components
 
-These scripts keep the root level Makefile small and simple.
+- etcd
+- redis
 
-Examples:
+## Requires
 
-* https://github.com/kubernetes/helm/tree/master/scripts
-* https://github.com/cockroachdb/cockroach/tree/master/scripts
-* https://github.com/hashicorp/terraform/tree/master/scripts
+```sh
+# .env
+ETCD_PASS=
+REDIS_PASS=
+```
+
+## References
+
+- [bitnami redis](https://hub.docker.com/r/bitnami/redis)
+- [bitnami etcd](https://hub.docker.com/r/bitnami/etcd)
