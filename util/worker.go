@@ -21,10 +21,11 @@ type worker struct {
 	id     int
 	jobs   chan Job
 	wg     *sync.WaitGroup
+	fn     func(Job)
 	closed chan struct{}
 }
 
-func NewPool(numWorkers int) *Pool {
+func NewPool(numWorkers int, fn func(Job)) *Pool {
 	p := &Pool{
 		workers: make([]*worker, numWorkers),
 		jobs:    make(chan Job),
@@ -35,6 +36,7 @@ func NewPool(numWorkers int) *Pool {
 			id:     i,
 			jobs:   p.jobs,
 			wg:     &p.wg,
+			fn:     fn,
 			closed: make(chan struct{}),
 		}
 		p.workers[i] = w
@@ -62,6 +64,7 @@ func (w *worker) run() {
 			}
 			fmt.Printf("worker %d processing job %d with data %v\n", w.id, job.id, job.data)
 			w.wg.Add(1)
+			w.fn(job)
 			time.Sleep(1 * time.Second)
 			w.wg.Done()
 		case <-w.closed:
